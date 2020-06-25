@@ -1,7 +1,10 @@
 import os
 
 import discord
+import random
 import datetime
+import threading
+from time import sleep
 
 TOKEN = "NzI1NzE2NjQwMjU1MzExOTYz.XvSzmg.rNX4QMpGKZPJ6R4aUj-OXHHpv20"
 GUILD = "pno/sw waiting room"
@@ -22,6 +25,14 @@ async def on_ready():
         f'{guild.name}(id: {guild.id})'
     )
     
+
+def rep_int(try_int):
+    try:
+        int(try_int)
+        return True
+    except ValueError:
+        return False
+
 @client.event
 async def on_message(message):
     if message.author == client.user:
@@ -44,5 +55,27 @@ async def on_message(message):
             }
             response = "Starting timer for " + message.author.name
         await message.channel.send(response)
+    elif message.content.startswith('@roll'):
+        message_info = message.content.split()
+        response = ''
+        if len(message_info) == 1:  
+            response = random.randint(1, 100)
+        elif len(message_info) == 2 and rep_int(message_info[1]):
+            response = random.randint(1, int(message_info[1]))
+        await message.channel.send(message.author.name + " rolled a " + str(response) + "!")
+
+    
+    #elif message.content.startswith('!ld'):
+    #    message_info = message.content.split()
+    #    response = ''
+
+    #    if len(message_info) == 2 and rep_int(message_info[1]):
+    #        response = "@{} :your LD timer is done!".format(message.author.id)
+
+    #        async def an(x, y, z):
+    #            sleep(x)
+    #            await y.send(z)
+
+    #        threading._start_new_thread(an, (int(message_info[1]), message.channel, response,))
 
 client.run(TOKEN)
