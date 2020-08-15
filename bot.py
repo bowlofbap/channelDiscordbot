@@ -6,7 +6,7 @@ import datetime
 import threading
 from time import sleep
 
-TOKEN = "NzI1NzE2NjQwMjU1MzExOTYz.XvSzmg.rNX4QMpGKZPJ6R4aUj-OXHHpv20"
+TOKEN = "NzI1NzE2NjQwMjU1MzExOTYz.XvTmWQ.eTI4AwZmy6jaJXKSz5G4GaToyDk"
 GUILD = "pno/sw waiting room"
 
 client = discord.Client()
@@ -63,7 +63,8 @@ async def on_message(message):
         elif len(message_info) == 2 and rep_int(message_info[1]):
             response = random.randint(1, int(message_info[1]))
         await message.channel.send(message.author.name + " rolled a " + str(response) + "!")
-
+    elif message.content == '!help':
+        await message.channel.send("noob?")
     
     #elif message.content.startswith('!ld'):
     #    message_info = message.content.split()
